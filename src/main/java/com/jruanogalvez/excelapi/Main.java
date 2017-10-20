@@ -3,11 +3,8 @@ package com.jruanogalvez.excelapi;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,9 +13,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Main {
     
-    public static void main(String[] args) {
-        transformToArray("C:\\Users\\matinal\\Downloads\\example.xlsx");
-    }
+    /*public static void main(String[] args) {
+        transformToArray("C:\\Users\\video\\Downloads\\example.xlsx");
+    }*/
     
     public static ArrayList<ArrayList<String>> transformToArray(String inputFile) {
         FileInputStream input;
@@ -75,38 +72,14 @@ public class Main {
             System.out.println(element);
         });*/
         
-        transformToExcel(data, "C:\\Users\\matinal\\Downloads\\example2.xlsx");
-        
+        //transformToExcel(data, "C:\\Users\\video\\Downloads\\example2.xlsx");
         return data;
     }
 
     public static void transformToExcel(ArrayList<ArrayList<String>> data, String path) {
-        
-        XSSFWorkbook wb = new XSSFWorkbook();
-        Sheet thisSheet = wb.createSheet();
-        
-        thisSheet.createRow(data.size());
-        
-        for(int i = 0; i < thisSheet.getLastRowNum(); i++) {
-            Row thisRow = thisSheet.getRow(i);
-            thisRow.createCell(data.get(i).size());
-            
-            for(int j = 0; j < thisRow.getLastCellNum(); j++) {
-                Cell thisCell = thisRow.getCell(j);
-                thisCell.setCellValue(data.get(i).get(j));
-            }
-        }
-        
-        try {
-            FileOutputStream out = new FileOutputStream(new File(path));
-            wb.write(out);
-            
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se ha encontrado el archivo de salida.");
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+        ExcelBook e = new ExcelBook(data, path);
+        e.writeExcelSheet();
+        e.writeExcelFile();
+      
     }
 }
