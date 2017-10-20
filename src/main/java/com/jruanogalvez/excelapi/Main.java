@@ -5,21 +5,31 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ *
+ * @author Jose Ruano
+ */
 public class Main {
     
-    /*public static void main(String[] args) {
-        transformToArray("C:\\Users\\video\\Downloads\\example.xlsx");
-    }*/
+    /**
+     * This method transform the XLSX file into an dynamic Array.
+     *      * 
+     * @param inputFile the file input to transform it into an Array, must be an .xlsx file
+     * @return a bidimensional ArrayList
+     * @throws ExcelAPISyntaxException 
+     */
     
-    public static ArrayList<ArrayList<String>> transformToArray(String inputFile) {
-        FileInputStream input;
-        XSSFWorkbook wb;
+    public static ArrayList<ArrayList<String>> transformToArray(String inputFile) throws ExcelAPISyntaxException {
+        FileInputStream input = null;
+        XSSFWorkbook wb = null;
         
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<String> rowList = new ArrayList<>();
@@ -57,26 +67,37 @@ public class Main {
                 }
             }
             
-            wb.close();
-            input.close();
-            
         } catch (FileNotFoundException ex) {
             System.out.println("No se puede encontrar el archivo especificado.");
             
         } catch (IOException ex) {
             System.out.println("No se puede leer o escribir el archivo.");
             
+        } finally {
+            try {
+                wb.close();
+                input.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
-        /*data.forEach((element) -> {
-            System.out.println(element);
-        });*/
-        
-        //transformToExcel(data, "C:\\Users\\video\\Downloads\\example2.xlsx");
         return data;
     }
 
-    public static void transformToExcel(ArrayList<ArrayList<String>> data, String path) {
+    /**
+     * 
+     * This method transform the ArrayList introduced into a XLSX document
+     * in the specified path.
+     * 
+     * @param data the ArrayList, must be a bidimensional ArrayList
+     * @param path the path to save the returned document.
+     * @throws ExcelAPISyntaxException 
+     */
+    
+    public static void transformToExcel(ArrayList<ArrayList<String>> data, 
+            String path) throws ExcelAPISyntaxException {
+        
         ExcelBook e = new ExcelBook(data, path);
         e.writeExcelSheet();
         e.writeExcelFile();

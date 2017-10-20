@@ -23,28 +23,41 @@ public class ExcelBook {
         this.path = path;
     }
     
-    public void writeExcelSheet() {
-        wb = new XSSFWorkbook();
-        Sheet thisSheet = wb.createSheet();
-        
-        for(int i = 0; i < data.size(); i++) {
-            Row thisRow = thisSheet.createRow(i);
-            
-            for(int j = 0; j < data.get(i).size(); j++) {
-                Cell thisCell = thisRow.createCell(j);
-                thisCell.setCellValue(data.get(i).get(j));
+    public boolean checkPathSyntax() throws ExcelAPISyntaxException {
+        if(path.endsWith(".xlsx"))
+            return true;
+        else
+            throw new ExcelAPISyntaxException("El nombre del archivo " + path +
+                    " es incorrecto.");
+    }
+    
+    public void writeExcelSheet() throws ExcelAPISyntaxException {
+        if(checkPathSyntax()) {
+            wb = new XSSFWorkbook();
+            Sheet thisSheet = wb.createSheet();
+
+            for(int i = 0; i < data.size(); i++) {
+                Row thisRow = thisSheet.createRow(i);
+
+                for(int j = 0; j < data.get(i).size(); j++) {
+                    Cell thisCell = thisRow.createCell(j);
+                    thisCell.setCellValue(data.get(i).get(j));
+                }
             }
         }
     }
     
-    public void writeExcelFile() {
+    public void writeExcelFile() throws ExcelAPISyntaxException {
+        if(checkPathSyntax()) {
+            FileOutputStream out = null;
+        
         try {
             output = new File(path);
             
             if(!output.exists())
                 output.createNewFile();
             
-            FileOutputStream out = new FileOutputStream(output);
+            out = new FileOutputStream(output);
             wb.write(out);
             
         } catch (FileNotFoundException ex) {
@@ -52,6 +65,15 @@ public class ExcelBook {
                     + " para la salida.");
         } catch (IOException ex) {
             System.out.println("Error de Entrada/Salida.");
+            
+        } finally {
+            try {
+                out.close();
+                wb.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ExcelBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         }
     }
     
