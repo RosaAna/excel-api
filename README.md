@@ -4,4 +4,4 @@ An API built in Java to transform data in ArrayList to Excel sheets and the reve
 
 ## How to use
 
-To see the instructions to use this API go to 
+To see the instructions to use this API go to `https://jruanodev.github.io/ExcelAPI/`
