@@ -1,7 +1,6 @@
 package com.jruanogalvez.excelapi;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,31 +48,30 @@ public class ExcelBook {
     
     public void writeExcelFile() throws ExcelAPISyntaxException {
         if(checkPathSyntax()) {
-            FileOutputStream out = null;
-        
-        try {
-            output = new File(path);
             
-            if(!output.exists())
-                output.createNewFile();
-            
-            out = new FileOutputStream(output);
-            wb.write(out);
-            
-        } catch (FileNotFoundException ex) {
-            System.out.println("No se puede encontrar el archivo específicado"
-                    + " para la salida.");
-        } catch (IOException ex) {
-            System.out.println("Error de Entrada/Salida.");
-            
-        } finally {
             try {
-                out.close();
-                wb.close();
+                output = new File(path);
+
+                if(!output.exists())
+                    output.createNewFile();
+                
             } catch (IOException ex) {
-                Logger.getLogger(ExcelBook.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error al crear el fichero.");
             }
-        }
+            
+            try(FileOutputStream out = new FileOutputStream(output);) {
+                wb.write(out);
+                
+            } catch (IOException ex) {
+                System.out.println("Error de Entrada/Salida.");
+
+            } finally {
+                try {
+                    wb.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ExcelBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
     
