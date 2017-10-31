@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.jruanogalvez.excelapi.test.MainTest" time="0.461" tests="4" errors="0" skipped="0" failures="1">
+=======
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.jruanogalvez.excelapi.test.MainTest" time="0.811" tests="4" errors="0" skipped="0" failures="0">
+>>>>>>> a9fb1e5dfe316717f9387f2a80888f4b2180a7bd
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,12 +63,17 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
+<<<<<<< HEAD
   <testcase name="testAllTransform" classname="com.jruanogalvez.excelapi.test.MainTest" time="0.017">
     <failure type="java.lang.NullPointerException">java.lang.NullPointerException
 	at com.jruanogalvez.excelapi.test.MainTest.testAllTransform(MainTest.java:69)
 </failure>
   </testcase>
   <testcase name="testExcelFileWritting" classname="com.jruanogalvez.excelapi.test.MainTest" time="0.399"/>
+=======
+  <testcase name="testAllTransform" classname="com.jruanogalvez.excelapi.test.MainTest" time="0.749"/>
+  <testcase name="testExcelFileWritting" classname="com.jruanogalvez.excelapi.test.MainTest" time="0.016"/>
+>>>>>>> a9fb1e5dfe316717f9387f2a80888f4b2180a7bd
   <testcase name="testSyntaxCheck" classname="com.jruanogalvez.excelapi.test.MainTest" time="0"/>
   <testcase name="testExcelSheetWritting" classname="com.jruanogalvez.excelapi.test.MainTest" time="0.023"/>
 </testsuite>
